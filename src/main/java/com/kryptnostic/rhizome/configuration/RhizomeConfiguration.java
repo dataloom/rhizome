@@ -34,7 +34,7 @@ public class RhizomeConfiguration implements Configuration {
     protected static final boolean                                       PERSISTENCE_ENABLED_DEFAULT        = true;
     protected static final boolean                                       SESSION_CLUSTERING_ENABLED_DEFAULT = false;
     private static final   long                                          serialVersionUID                   = -8444209890618166001L;
-    protected static ConfigurationKey                                        key                                = new SimpleConfigurationKey(
+    protected static final ConfigurationKey                                  key                                = new SimpleConfigurationKey(
             "rhizome.yaml" );
     protected final  Logger                                                  logger                             = LoggerFactory
             .getLogger(

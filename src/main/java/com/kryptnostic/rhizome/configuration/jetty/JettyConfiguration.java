@@ -31,7 +31,7 @@ public class JettyConfiguration implements Configuration {
 
     private static final long serialVersionUID = 129440984814569272L;
 
-    protected static ConfigurationKey key = new SimpleConfigurationKey(
+    protected static final ConfigurationKey key = new SimpleConfigurationKey(
             "jetty.yaml" );
 
     protected final Optional<String>                 keymanagerPassword;
