@@ -59,6 +59,15 @@ spotbugsMain {
     ignoreFailures = true
 }
 
+spotbugsTest {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+    ignoreFailures = true
+}
+
+
 run {
     if (System.getProperty("exec.args") != null) {
         args System.getProperty("exec.args").split()

@@ -16,6 +16,7 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.RateLimiter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.Assert;
@@ -66,7 +67,7 @@ public class AuthenticationTest {
         } catch ( UnsupportedEncodingException e ) {
             throw new IllegalStateException( e );
         }
-        JwtAuthenticationProvider provider = new JwtAuthenticationProvider( clientSecret.getBytes(), issuer, audience );
+        JwtAuthenticationProvider provider = new JwtAuthenticationProvider( clientSecret.getBytes( Charset.defaultCharset() ), issuer, audience );
         accessTokens = CacheBuilder.newBuilder()
                 .build( new CacheLoader<AuthenticationTestRequestOptions, TokenHolder>() {
                     @Override public TokenHolder load( AuthenticationTestRequestOptions options ) throws Exception {

@@ -14,7 +14,7 @@ import com.kryptnostic.rhizome.configuration.SimpleConfigurationKey;
 public class TestConfiguration implements Configuration {
     private static final long         serialVersionUID       = 129440984814569272L;
 
-    protected static ConfigurationKey key                    = new SimpleConfigurationKey( "test.yaml" );
+    protected static final ConfigurationKey key              = new SimpleConfigurationKey( "test.yaml" );
 
     protected static final String     REQUIRED_TEST_PROPERTY = "required";
     protected static final String     OPTIONAL_TEST_PROPERTY = "optional";

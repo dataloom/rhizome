@@ -24,6 +24,7 @@ package com.geekbeast.rhizome.jobs
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.HazelcastInstanceAware
 import com.hazelcast.map.IMap
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.lang.Thread.interrupted
@@ -42,6 +43,7 @@ const val INITIALIZE_TASK_ID_POLLING_MILLIS = 500L
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 
+@SuppressFBWarnings(value = ["NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR", "SA_FIELD_SELF_ASSIGNMENT"], justification = "Im avoiding the question right now")
 abstract class AbstractDistributedJob<R, S : JobState>(
         state: S,
         val maxBatchDuration: Long = 1,
