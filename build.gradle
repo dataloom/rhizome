@@ -27,6 +27,12 @@ apply plugin: 'kotlin'
 
 mainClassName = "com.kryptnostic.rhizome.core.RhizomeAws"
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
 checkstyle {
     toolVersion = '7.4'
     showViolations = false
@@ -58,9 +64,6 @@ run {
         args System.getProperty("exec.args").split()
     }
 }
-
-ext.sourceCompatibility = JavaVersion.VERSION_11
-ext.targetCompatibility = JavaVersion.VERSION_11
 
 tasks.withType(JavaCompile) {
     options.compilerArgs += ["--add-modules", "java.se",
