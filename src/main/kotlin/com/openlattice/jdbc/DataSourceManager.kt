@@ -8,11 +8,13 @@ import com.openlattice.postgres.PostgresTableManager
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 
 /**
  *
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
+@Component
 class DataSourceManager(
         dataSourceConfigurations: Map<String, PostgresConfiguration>,
         healthCheckRegistry: HealthCheckRegistry,
