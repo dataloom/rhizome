@@ -20,29 +20,29 @@
 
 package com.openlattice.postgres;
 
+import com.kryptnostic.rhizome.configuration.ConfigurationConstants;
 import com.kryptnostic.rhizome.configuration.RhizomeConfiguration;
 import com.openlattice.jdbc.JdbcPod;
 import com.zaxxer.hikari.HikariDataSource;
-import java.sql.SQLException;
-import java.util.Set;
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 
+import javax.inject.Inject;
+import java.sql.SQLException;
+import java.util.Set;
+
 /**
  * @author Matthew Tamayo-Rios &lt;matthew@openlattice.com&gt;
  */
 @Configuration
-@Profile( PostgresPod.PROFILE )
+@Profile( ConfigurationConstants.Profiles.POSTGRES_DB_PROFILE )
 @Import( JdbcPod.class )
 public class PostgresPod {
-    public static final String PROFILE = "postgres";
-
-    @Inject RhizomeConfiguration rhizomeConfiguration;
+    @Inject
+    private RhizomeConfiguration rhizomeConfiguration;
 
     @Inject
     private HikariDataSource hds;

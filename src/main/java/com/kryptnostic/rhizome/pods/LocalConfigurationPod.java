@@ -1,15 +1,17 @@
 package com.kryptnostic.rhizome.pods;
 
+import com.kryptnostic.rhizome.configuration.ConfigurationConstants.Profiles;
+import com.kryptnostic.rhizome.configuration.RhizomeConfiguration;
+import com.kryptnostic.rhizome.configuration.jetty.JettyConfiguration;
+import com.kryptnostic.rhizome.configuration.service.ConfigurationService;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.kryptnostic.rhizome.configuration.RhizomeConfiguration;
-import com.kryptnostic.rhizome.configuration.ConfigurationConstants.Profiles;
-import com.kryptnostic.rhizome.configuration.jetty.JettyConfiguration;
-import com.kryptnostic.rhizome.configuration.service.ConfigurationService;
+import java.util.Objects;
 
 /**
  * The configuration pod is responsible for bootstrapping the initial environment. It sets up component scanning
@@ -24,7 +26,7 @@ import com.kryptnostic.rhizome.configuration.service.ConfigurationService;
  */
 @Configuration
 @Profile( Profiles.LOCAL_CONFIGURATION_PROFILE )
-public class LocalConfigurationPod {
+public class LocalConfigurationPod implements RootConfigurationSource {
     private static final Logger               logger = LoggerFactory.getLogger( LocalConfigurationPod.class );
     private static final RhizomeConfiguration rhizomeConfiguration;
     private static final JettyConfiguration   jettyConfiguration;
@@ -40,12 +42,14 @@ public class LocalConfigurationPod {
     }
 
     @Bean
+    @NotNull
     public RhizomeConfiguration rhizomeConfiguration() {
-        return rhizomeConfiguration;
+        return Objects.requireNonNull( rhizomeConfiguration );
     }
 
     @Bean
+    @NotNull
     public JettyConfiguration jettyConfiguration() {
-        return jettyConfiguration;
+        return Objects.requireNonNull( jettyConfiguration );
     }
 }

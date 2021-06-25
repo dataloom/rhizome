@@ -9,6 +9,7 @@ public final class ConfigurationConstants {
         public static final String AWS_TESTING_PROFILE              = "awstest";
         public static final String LOCAL_CONFIGURATION_PROFILE      = "local";
         public static final String KUBERNETES_CONFIGURATION_PROFILE = "kubernetes";
+        public static final String POSTGRES_DB_PROFILE              = "postgres";
 
         private Profiles() {
         }

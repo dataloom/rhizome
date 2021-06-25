@@ -28,19 +28,19 @@ import com.kryptnostic.rhizome.configuration.amazon.AmazonLaunchConfiguration;
 import com.kryptnostic.rhizome.configuration.jetty.JettyConfiguration;
 import com.openlattice.ResourceConfigurationLoader;
 import com.openlattice.aws.AwsS3Pod;
-import javax.inject.Inject;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 
-
+import javax.inject.Inject;
 
 
 @Profile( { Profiles.AWS_CONFIGURATION_PROFILE, Profiles.AWS_TESTING_PROFILE } )
 @Configuration
 @Import(AwsS3Pod.class)
-public class AwsRhizomeConfigurationPod {
+public class AwsRhizomeConfigurationPod implements RootConfigurationSource {
     @Inject
     private AmazonLaunchConfiguration awsConfig;
 
@@ -48,6 +48,7 @@ public class AwsRhizomeConfigurationPod {
     private AmazonS3 s3;
 
     @Bean
+    @NotNull
     public RhizomeConfiguration rhizomeConfiguration() {
         return ResourceConfigurationLoader.loadConfigurationFromS3( s3,
                 awsConfig.getBucket(),
@@ -56,6 +57,7 @@ public class AwsRhizomeConfigurationPod {
     }
 
     @Bean
+    @NotNull
     public JettyConfiguration jettyConfiguration() {
         return ResourceConfigurationLoader.loadConfigurationFromS3( s3,
                 awsConfig.getBucket(),

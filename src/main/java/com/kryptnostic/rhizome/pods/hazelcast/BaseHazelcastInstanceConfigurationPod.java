@@ -13,8 +13,6 @@ import com.kryptnostic.rhizome.configuration.hazelcast.HazelcastConfigurationCon
 import com.kryptnostic.rhizome.configuration.hazelcast.ScheduledExecutorConfiguration;
 import com.kryptnostic.rhizome.pods.ConfigurationPod;
 import com.kryptnostic.rhizome.pods.HazelcastPod;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +25,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * This pod provides a basic hazelcast configuration without stream serializers, map stores, or queue stores. If
@@ -175,8 +175,14 @@ public class BaseHazelcastInstanceConfigurationPod {
     }
 
     protected static NetworkConfig networkConfig( HazelcastConfiguration hzConfiguration ) {
-        return new NetworkConfig().setPort( hzConfiguration.getPort() ).setJoin(
-                getJoinConfig( hzConfiguration.getHazelcastSeedNodes() ) );
+        return new NetworkConfig()
+                .setPort( hzConfiguration.getPort() )
+                .setJoin( getJoinConfig( hzConfiguration.getHazelcastSeedNodes() ) )
+                .setRestApiConfig( getRestApiConfig(hzConfiguration) );
+
+    }
+    protected static RestApiConfig getRestApiConfig( HazelcastConfiguration configuration ) {
+        return new RestApiConfig().setEnabled( configuration.isHealthcheckEnabled() );
     }
 
     protected static JoinConfig getJoinConfig( List<String> nodes ) {

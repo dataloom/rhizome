@@ -26,8 +26,10 @@ public class HazelcastConfiguration {
     private static final   String SERVER_ROLE_PROPERTY     = "server";
     private static final   String DURABLE_EXECUTORS        = "durable-executors";
     private static final   String SCHEDULED_EXECUTORS      = "scheduled-executors";
+    private static final   String HZ_HEALTH_CHECK_PROPERTY = "healthcheck";
 
     // @formatter:off
+    public static final    boolean      DEFAULT_HEALTHCHECK        = true;
     public static final    int          DEFAULT_PORT               = 5701;
     public static final    boolean      DEFAULT_SERVER_ROLE        = true;
     protected static final Integer      CP_MEMBER_COUNT_DEFAULT    = 3;
@@ -45,6 +47,7 @@ public class HazelcastConfiguration {
     private final Optional<List<ScheduledExecutorConfiguration>> scheduledExecutors;
     private final Integer                                      cpMemberCount;
     private final Optional<List<DurableExecutorConfiguration>> durableExecutors;
+    private final boolean                                        healthcheckEnabled;
 
     @JsonCreator
     public HazelcastConfiguration(
@@ -57,6 +60,7 @@ public class HazelcastConfiguration {
             @JsonProperty( REPLICATION_FACTOR ) Optional<Integer> replicationFactor,
             @JsonProperty( SCHEDULED_EXECUTORS ) Optional<List<ScheduledExecutorConfiguration>> scheduledExecutors,
             @JsonProperty( DURABLE_EXECUTORS ) Optional<List<DurableExecutorConfiguration>> durableExecutors,
+            @JsonProperty( HZ_HEALTH_CHECK_PROPERTY ) Optional<Boolean> healthcheck,
             @JsonProperty( CP_MEMBER_COUNT_PROPERTY ) Optional<Integer> cpMemberCount ) {
 
         this.group = group.orElse( DEFAULT_GROUP_NAME );
@@ -69,6 +73,7 @@ public class HazelcastConfiguration {
         this.scheduledExecutors = scheduledExecutors;
         this.cpMemberCount = cpMemberCount.orElse( CP_MEMBER_COUNT_DEFAULT );
         this.durableExecutors = durableExecutors;
+        this.healthcheckEnabled = healthcheck.orElse( DEFAULT_HEALTHCHECK );
     }
 
     @JsonProperty( SEED_NODES_PROPERTY )
@@ -106,6 +111,11 @@ public class HazelcastConfiguration {
         return server;
     }
 
+    @JsonProperty( HZ_HEALTH_CHECK_PROPERTY )
+    public boolean isHealthcheckEnabled() {
+        return healthcheckEnabled;
+    }
+
     @JsonProperty( CP_MEMBER_COUNT_PROPERTY )
     public Integer getCPMemberCount() {
         return cpMemberCount;
@@ -128,6 +138,7 @@ public class HazelcastConfiguration {
         return replicationFactor == that.replicationFactor &&
                 port == that.port &&
                 server == that.server &&
+                healthcheckEnabled == that.healthcheckEnabled &&
                 Objects.equals( hazelcastSeedNodes, that.hazelcastSeedNodes ) &&
                 Objects.equals( instanceName, that.instanceName ) &&
                 Objects.equals( group, that.group ) &&
@@ -147,7 +158,8 @@ public class HazelcastConfiguration {
                 server,
                 scheduledExecutors,
                 cpMemberCount,
-                durableExecutors );
+                durableExecutors,
+                healthcheckEnabled );
     }
 
     @Override public String toString() {
@@ -162,6 +174,7 @@ public class HazelcastConfiguration {
                 ", scheduledExecutors=" + scheduledExecutors +
                 ", cpMemberCount=" + cpMemberCount +
                 ", durableExecutors=" + durableExecutors +
+                ", healthcheckEnabled=" + healthcheckEnabled +
                 '}';
     }
 }

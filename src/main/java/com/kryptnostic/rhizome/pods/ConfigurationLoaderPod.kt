@@ -54,7 +54,9 @@ class LocalConfigurationLoader : ConfigurationLoader {
  * * In the deployment for the service, add the container volumeMount: `{"mountPath": "/etc/openlattice", "name": "config-volume", "readOnly": true}`
  */
 class KubernetesConfigurationLoader : ConfigurationLoader {
-    private val rootPath = "/etc/openlattice"
+    companion object {
+        const val rootPath = "/etc/openlattice"
+    }
     override fun <T> load(clazz: Class<T>): T {
         return ResourceConfigurationLoader.loadConfigurationFromFile(rootPath, clazz)
     }
